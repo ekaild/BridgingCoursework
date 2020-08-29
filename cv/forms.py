@@ -1,8 +1,10 @@
 from django import forms
 
-from .models import Post
+from .models import Traits
 
-class PostForm(forms.ModelForm):
+class TraitsForm(forms.ModelForm):
+
     class Meta:
-        model = Post
-        fields = ('title', 'text',)
+        model = Traits
+        fields = ('title', 'text')
+

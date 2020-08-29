@@ -1,124 +1,23 @@
-	{% load static %}
-	<!DOCTYPE html>
-	<html>
-		<head>
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-			<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-			<link rel="stylesheet" href="{% static 'css/blog2.css' %}">
-			<title>Bogdan's CV</title>
-		</head>
-		<body>
-				<div class="page-header">
-						{% if user.is_authenticated %}
-							<a href="{% url 'cv_edit' %}" class="top-menu"><span class="glyphicon glyphicon-cog"></span></a>
-						{% endif %}
-						<h1><a href="/">Bogdan's CV</a></h1>
-					</div>
-					
-				<div class="content container">
-						<div class="content">
-								<div id="cv" class="content">
-										    <div class="mainDetails">
-										        
-										        <div id="name">
-										            <h1 class="page-header">Bogdan</h1>
-										            <h2 class="title">Programmer</h2>
-										        </div>
-										        
-										        <div id="contactDetails" class="content">
-										            <ul>
-										                <li>e: <a href="mailto:bogdan@email.com" target="_blank">bogdan@email.com</a></li>
-										                <li>m: 07449287163</li>
-										            </ul>
-										        </div>
-										        <div class="clear"></div>
-										    </div>
-										    
-										    <div id="mainArea" class="text">
-										        <section>
-										            <article>
-										                <div class="sectionTitle">
-										                    <h1>Personal Profile</h1>
-										                </div>
-										                
-										                <div class="sectionContent">
-										                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dolor metus, interdum at scelerisque in, porta at lacus. Maecenas dapibus luctus cursus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
-										                </div>
-										            </article>
-										            <div class="clear"></div>
-										        </section>
-										        
-										        
-										        <section>
-										            <div class="sectionTitle">
-										                <h1>Work Experience</h1>
-										            </div>
-										            
-										            <div class="sectionContent">
-										                <article>
-										                    <h2>Job Title at Company</h2>
-										                    <p class="subDetails">April 2011 - Present</p>
-										                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim. Vestibulum bibendum mattis dignissim. Proin id sapien quis libero interdum porttitor.</p>
-										                </article>
-										            </div>
-										            <div class="clear"></div>
-										        </section>
-										        
-										        
-										        <section>
-										            <div class="sectionTitle">
-										                <h1>Key Skills</h1>
-										            </div>
-										            
-										            <div class="sectionContent">
-										                <ul class="keySkills">
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                    <li>A Key Skill</li>
-										                </ul>
-										            </div>
-										            <div class="clear"></div>
-										        </section>
-										        
-										        
-										        <section>
-										            <div class="sectionTitle">
-										                <h1>Education</h1>
-										            </div>
-										            
-										            <div class="sectionContent">
-										                <article>
-										                    <h2>College/University</h2>
-										                    <p class="subDetails">Qualification</p>
-										                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim.</p>
-										                </article>
-										                
-										                <article>
-										                    <h2>College/University</h2>
-										                    <p class="subDetails">Qualification</p>
-										                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies massa et erat luctus hendrerit. Curabitur non consequat enim.</p>
-										                </article>
-										            </div>
-										            <div class="clear"></div>
-										        </section>
-										        
-										    </div>
-										</div>
-										
-							<p>
-							{% block content %}
-							{% endblock %}
-							</p>
-							
-						</div>
-					</div>
-		</body>
-	</html> 
+{% extends 'blog/base.html' %}
 
-	
+    {% block content %}
+        <h1 style="border-bottom: 12px double #0a3652; text-align: center;">
+            Curriculum Vitae
+            {% if user.is_authenticated %}
+                <a  style="text-align:left" class="btn btn-default" href="{% url 'cv_new' %}">New trait <span class="glyphicon glyphicon-plus"></span></a>
+            {% endif %}
+		</h1>
+		<div class="page-header">
+			<h1><a href="\">Bogdan Pepenel</a></h1>
+		</div>
+        
+        {% for trait in traits %}
+            <div class = "trait">
+                {% if user.is_authenticated %}
+                    <a class="btn btn-default" href="{% url 'cv_edit' pk=trait.pk %}">Edit <span class="glyphicon glyphicon-pencil"></span></a>
+                {% endif %}
+                    <h3>{{trait.title}}:</h3>
+                    <p><h4 style="font-family:'Times New Roman', Times, serif">{{trait.text }}</h4></p>
+            </div>
+        {% endfor %}
+    {% endblock %}

@@ -1,27 +1,24 @@
-from django.shortcuts import render
-from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404, redirect, render, reverse
-from django.http import HttpResponse
-from django.shortcuts import render_to_response
+# IT DOESN'T MATTER WHETHER YOU WRITE SOMETHING HERE. DJANGO WILL ONLY LOOK AT BLOG.VIEWS.py FOR SOME REASON
+
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from .models import Post
-from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostForm
+from django.shortcuts import redirect
+
+from .models import Traits
+from .forms import TraitsForm
 
 def cv(request):
+   # traits = Traits.objects.all() 'traits' : traits
     return render(request, 'cv.html', {})
 
-def cv_edit(request):
-  
-    post = get_object_or_404(Post)
+def cv_edit(request, pk):
+    trait = get_object_or_404(Traits, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = TraitsForm(request.POST, instance=trait)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('cv', pk=post.pk)
+            trait = form.save(commit=False)
+            trait.save()
+            return redirect('cv_edit', pk=trait.pk)
     else:
-        form = PostForm(instance=post)
+        form = TraitsForm(instance=trait) 
     return render(request, 'cv/cv_edit.html', {'form': form})
-    

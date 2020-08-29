@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.utils import timezone
 from .models import Post
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostForm
+from .forms import PostForm, TraitsForm
+from .models import Traits
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -39,5 +40,31 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-def cv_page(request):
-    return render(request, '../../cv/templates/cv/cv.html', {})
+def cv_view(request):
+    traits = Traits.objects.all()
+    return render(request, '../../cv/templates/cv/cv.html', {'traits' : traits})
+
+def cv_edit(request, pk):
+    trait = get_object_or_404(Traits, pk=pk)
+    if request.method == "POST":
+        form = TraitsForm(request.POST, instance=trait)
+        if form.is_valid():
+            trait = form.save(commit=False)
+            trait.save()
+            return redirect('cv_view')
+    else:
+        form = TraitsForm(instance=trait) 
+    return render(request, '../../cv/templates/cv/cv_edit.html', {'form': form})
+
+def cv_new(request):
+    if request.method == "POST":
+        form = TraitsForm(request.POST)
+        if form.is_valid():
+            trait = form.save(commit=False)
+            trait.save()
+            return redirect('cv_view')
+    else:
+        form = TraitsForm()
+    return render(request, '../../cv/templates/cv/cv_edit.html', {'form': form})
+
+
