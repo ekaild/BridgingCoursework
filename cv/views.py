@@ -8,7 +8,6 @@ from .models import Traits
 from .forms import TraitsForm
 
 def cv(request):
-   # traits = Traits.objects.all() 'traits' : traits
     return render(request, 'cv.html', {})
 
 def cv_edit(request, pk):
