@@ -1,6 +1,9 @@
 {% extends 'blog/base.html' %}
 
     {% block content %}
+        <head>
+            <title>Bogdan's CV</title>
+        </head>
         <h1 style="border-bottom: 12px double #0a3652; text-align: center;">
             Curriculum Vitae
             {% if user.is_authenticated %}
@@ -16,7 +19,7 @@
             <div class="trait">
                 <p class="solid">
                 {% if user.is_authenticated %}
-                    <a class="btn btn-default" href="{% url 'cv_edit' pk=trait.pk %}">Edit <span class="glyphicon glyphicon-pencil"></span></a>
+                    <a class="btn btn-default" href="{% url 'cv_edit' pk=trait.pk %}">Edit <span class="glyphicon glyphicon-cog"></span></a>
                 {% endif %}
                     <h3>{{trait.title}}:</h3>
                     

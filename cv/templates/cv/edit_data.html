@@ -1,0 +1,20 @@
+<!-- I wanted to test something, not sure if this worked at all though-->
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+<div class="container ">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h3>{{title}}</h3>
+            <br>
+            <form  method="POST">
+            {% csrf_token %}
+
+            <button class="btn btn-success btn-block" type="submit">Update Data</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br>
+{% endblock %}
